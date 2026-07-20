@@ -1,65 +1,177 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import styles from "./page.module.css";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Property Services",
+  description:
+    "Professional DOFF cleaning, modular construction, landscaping, fencing and garden office services.",
+};
+
+const services = [
+  {
+    title: "DOFF Cleaning",
+    description:
+      "A specialist low-pressure cleaning system for brick, stone, timber and delicate exterior surfaces.",
+    href: "/doff-cleaning",
+  },
+  {
+    title: "Modular Houses",
+    description:
+      "Modern modular homes planned around your property, lifestyle and long-term requirements.",
+    href: "/modular-house",
+  },
+  {
+    title: "Landscaping",
+    description:
+      "Well-designed gardens and outdoor spaces created for practical, comfortable everyday living.",
+    href: "/landscape",
+  },
+  {
+    title: "Fencing",
+    description:
+      "Strong, carefully installed fencing and gates for privacy, security and a complete exterior.",
+    href: "/fencing-building",
+  },
+  {
+    title: "Modular Garden Offices",
+    description:
+      "Insulated, comfortable workspaces that create valuable room without extending your home.",
+    href: "/modular-garden-office",
+  },
+];
+
+const qualities = [
+  {
+    title: "Clear communication",
+    text: "You know what is happening, what comes next and how the work is progressing.",
+  },
+  {
+    title: "Careful preparation",
+    text: "Every project starts with understanding the property and selecting the right approach.",
+  },
+  {
+    title: "Professional finish",
+    text: "We pay attention to the details that make the completed work feel considered and complete.",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className={styles.page}>
+      <section className={styles.hero}>
+        <div className={styles.container}>
+          <div className={styles.heroContent}>
+            <p className={styles.eyebrow}>Property Services</p>
+
+            <h1 className={styles.heroTitle}>
+              Everything your property needs.
+              <span>One reliable team.</span>
+            </h1>
+
+            <div className={styles.heroFooter}>
+              <p className={styles.heroText}>
+                Specialist cleaning, landscaping, fencing and modular
+                construction delivered with care, precision and a practical
+                understanding of your property.
+              </p>
+
+              <div className={styles.heroActions}>
+                <Link href="#services" className={styles.primaryButton}>
+                  Explore services
+                </Link>
+
+                <Link href="#contact" className={styles.secondaryButton}>
+                  Contact us
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section id="services" className={styles.services}>
+        <div className={styles.container}>
+          <header className={styles.sectionHeader}>
+            <p className={styles.sectionLabel}>What we do</p>
+
+            <h2>
+              Practical services for homes, buildings and outdoor spaces.
+            </h2>
+          </header>
+
+          <div className={styles.serviceList}>
+            {services.map((service) => (
+              <Link
+                key={service.href}
+                href={service.href}
+                className={styles.serviceItem}
+              >
+                <h3>{service.title}</h3>
+
+                <p>{service.description}</p>
+
+                <span className={styles.serviceArrow} aria-hidden="true">
+                  ↗
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className={styles.approach}>
+        <div className={styles.container}>
+          <div className={styles.approachHeading}>
+            <p className={styles.sectionLabel}>How we work</p>
+
+            <div>
+              <h2>Simple process. Carefully delivered.</h2>
+
+              <p>
+                We begin by understanding what your property needs. From there,
+                we recommend a practical solution, plan the work properly and
+                complete it with close attention to quality and detail.
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.qualities}>
+            {qualities.map((quality) => (
+              <article key={quality.title} className={styles.quality}>
+                <h3>{quality.title}</h3>
+                <p>{quality.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className={styles.contact}>
+        <div className={styles.container}>
+          <div className={styles.contactInner}>
+            <div className={styles.contactHeading}>
+              <p className={styles.contactLabel}>Start a project</p>
+
+              <h2>Let&apos;s talk about your property.</h2>
+            </div>
+
+            <div className={styles.contactContent}>
+              <p>
+                Tell us what you want to clean, improve or build. We will help
+                you find the right next step.
+              </p>
+
+              <a
+                href="mailto:hello@yourcompany.com"
+                className={styles.contactButton}
+              >
+                Start a conversation
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

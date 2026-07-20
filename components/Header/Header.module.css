@@ -1,0 +1,286 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+  overflow: visible;
+
+  border-bottom: 1px solid rgb(0 0 0 / 8%);
+  background: rgb(255 255 255 / 96%);
+}
+
+.container {
+  position: relative;
+  z-index: 1002;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: min(1200px, calc(100% - 48px));
+  min-height: 76px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+
+  color: #111;
+
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+.desktopNavigation {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.servicesItem {
+  position: relative;
+  height: 76px;
+}
+
+.servicesItem::after {
+  content: "";
+
+  position: absolute;
+  right: 0;
+  bottom: 15px;
+  left: 0;
+
+  height: 2px;
+  border-radius: 999px;
+
+  background: #111;
+
+  transform: scaleX(0);
+  transform-origin: right center;
+
+  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  pointer-events: none;
+}
+
+.servicesItemActive::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.contactButton,
+.mobileContactButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 46px;
+  padding: 0 22px;
+
+  border: 1px solid #111;
+  border-radius: 999px;
+
+  color: #fff;
+  background: #111;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.contactButton:hover {
+  color: #111;
+  background: transparent;
+  transform: translateY(-1px);
+}
+
+.logo:focus-visible,
+.contactButton:focus-visible,
+.mobileContactButton:focus-visible,
+.mobileServiceLink:focus-visible,
+.menuButton:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 5px;
+}
+
+.menuButton {
+  position: relative;
+  z-index: 1003;
+
+  display: none;
+
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.menuButton span {
+  position: absolute;
+  left: 10px;
+
+  width: 24px;
+  height: 2px;
+
+  border-radius: 999px;
+  background: #111;
+
+  transition:
+    top 220ms ease,
+    transform 220ms ease,
+    opacity 160ms ease;
+}
+
+.menuButton span:nth-child(1) {
+  top: 14px;
+}
+
+.menuButton span:nth-child(2) {
+  top: 21px;
+}
+
+.menuButton span:nth-child(3) {
+  top: 28px;
+}
+
+.menuButtonOpen span:nth-child(1) {
+  top: 21px;
+  transform: rotate(45deg);
+}
+
+.menuButtonOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuButtonOpen span:nth-child(3) {
+  top: 21px;
+  transform: rotate(-45deg);
+}
+
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+
+  display: none;
+
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  padding: 100px 24px 32px;
+  overflow-y: auto;
+
+  background: #fff;
+
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  transform: translateY(-24px);
+
+  transition:
+    opacity 280ms ease,
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 420ms;
+}
+
+.mobileMenuOpen {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+
+  transform: translateY(0);
+
+  transition:
+    opacity 280ms ease,
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
+}
+
+.mobileNavigation {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  width: min(100%, 560px);
+  min-height: calc(100dvh - 132px);
+  margin: 0 auto;
+}
+
+.mobileServicesList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.mobileServiceLink {
+  display: block;
+  width: 100%;
+  padding: 11px 0;
+
+  color: #111;
+
+  font-size: clamp(24px, 7vw, 32px);
+  font-weight: 500;
+  line-height: 1.15;
+  text-decoration: none;
+
+  transition: opacity 180ms ease;
+}
+
+.mobileServiceLink:hover {
+  opacity: 0.55;
+}
+
+.mobileContactButton {
+  width: 100%;
+  min-height: 52px;
+  margin-top: auto;
+
+  font-size: 16px;
+}
+
+@media (max-width: 800px) {
+  .container {
+    width: calc(100% - 32px);
+    min-height: 68px;
+  }
+
+  .desktopNavigation {
+    display: none;
+  }
+
+  .menuButton {
+    display: block;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+}
+
+@media (min-width: 801px) {
+  .mobileMenu {
+    display: none;
+  }
+}
