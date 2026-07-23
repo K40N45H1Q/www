@@ -285,7 +285,8 @@
 
 @media (max-width: 50rem) {
   .header {
-    background-color: transparent;
+    background-color: var(--background);
+    backdrop-filter: none;
   }
 
   .container {
