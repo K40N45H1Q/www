@@ -1,0 +1,214 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  overflow: hidden;
+
+  background: color-mix(in srgb, var(--background) 18%, transparent);
+  backdrop-filter: blur(0.45rem);
+}
+
+.backdrop[data-state="closed"] {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.backdrop[data-state="opening"] {
+  visibility: visible;
+  pointer-events: auto;
+  animation: backdropEnter 0.5s ease both;
+}
+
+.backdrop[data-state="open"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.backdrop[data-state="closing"] {
+  visibility: visible;
+  pointer-events: none;
+  animation: backdropExit 0.38s ease both;
+}
+
+.modal {
+  width: min(100%, 42rem);
+  max-height: calc(100dvh - 3rem);
+  overflow: hidden;
+
+  border: var(--border-width) solid var(--foreground);
+  border-radius: 0.875rem;
+  outline: none;
+
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 72%, transparent);
+  backdrop-filter: blur(1.15rem) saturate(1.18);
+  box-shadow: 0 2.5rem 5rem rgb(0 0 0 / 22%);
+
+  will-change: transform, opacity;
+}
+
+.modal[data-state="closed"] {
+  opacity: 0;
+  transform: translateY(110dvh);
+}
+
+.modal[data-state="opening"] {
+  animation: modalEnter 0.82s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.modal[data-state="open"] {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.modal[data-state="closing"] {
+  animation: modalExit 0.42s cubic-bezier(0.7, 0, 0.84, 0) both;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem;
+
+  border-bottom: var(--border-width) solid var(--foreground);
+
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 58%, transparent);
+  backdrop-filter: blur(1rem);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+
+  border: var(--border-width) solid var(--foreground);
+  border-radius: 50%;
+  appearance: none;
+
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 62%, transparent);
+  backdrop-filter: blur(0.75rem);
+
+  cursor: pointer;
+
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.closeButton:hover {
+  color: var(--background);
+  background: var(--foreground);
+}
+
+.closeButton:focus-visible {
+  outline: 0.125rem solid var(--foreground);
+  outline-offset: 0.1875rem;
+}
+
+.content {
+  max-height: calc(100dvh - 9rem);
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: color-mix(in srgb, var(--background) 42%, transparent);
+}
+
+@keyframes backdropEnter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropExit {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(105dvh) scale(0.96);
+  }
+
+  68% {
+    opacity: 1;
+    transform: translateY(-0.875rem) scale(1.012);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes modalExit {
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(105dvh) scale(0.98);
+  }
+}
+
+@media (max-width: 40rem) {
+  .backdrop {
+    display: block;
+    padding: 0;
+  }
+
+  .modal {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    background: color-mix(in srgb, var(--background) 76%, transparent);
+  }
+
+  .modalHeader {
+    min-height: 5rem;
+    padding: 1rem;
+  }
+
+  .content {
+    height: calc(100dvh - 5rem);
+    max-height: none;
+    padding: 1.25rem 1rem;
+    overflow-y: auto;
+  }
+}

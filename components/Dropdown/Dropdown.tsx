@@ -8,32 +8,63 @@ import {
   useState,
   type FocusEvent,
 } from "react";
+import { FiChevronDown } from "react-icons/fi";
 import styles from "./Dropdown.module.css";
 
 export type DropdownItem = {
+  href?: string;
   label: string;
-  href: string;
+  value?: string;
 };
 
 type DropdownProps = {
-  label: string;
+  defaultValue?: string;
+  disabled?: boolean;
   items: DropdownItem[];
+  label: string;
+  name?: string;
   onNavigate?: (item: DropdownItem) => void;
   onOpenChange?: (isOpen: boolean) => void;
+  onValueChange?: (value: string, item: DropdownItem) => void;
+  placeholder?: string;
+  required?: boolean;
+  tabIndex?: number;
+  value?: string;
+  variant?: "navigation" | "form";
 };
 
 export default function Dropdown({
-  label,
+  defaultValue = "",
+  disabled = false,
   items,
+  label,
+  name,
   onNavigate,
   onOpenChange,
+  onValueChange,
+  placeholder = label,
+  required = false,
+  tabIndex,
+  value,
+  variant = "navigation",
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [internalValue, setInternalValue] = useState(defaultValue);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
+  const selectedValue = value ?? internalValue;
+  const selectedItem = items.find(
+    (item) => (item.value ?? item.href ?? item.label) === selectedValue,
+  );
+  const triggerLabel =
+    variant === "form" ? selectedItem?.label ?? placeholder : label;
 
   function changeOpenState(nextState: boolean) {
+    if (disabled) {
+      return;
+    }
+
     setIsOpen(nextState);
     onOpenChange?.(nextState);
   }
@@ -46,7 +77,11 @@ export default function Dropdown({
     changeOpenState(!isOpen);
   }
 
-  function handleNavigate(item: DropdownItem) {
+  function handleSelect(item: DropdownItem) {
+    const nextValue = item.value ?? item.href ?? item.label;
+
+    setInternalValue(nextValue);
+    onValueChange?.(nextValue, item);
     onNavigate?.(item);
     closeDropdown();
   }
@@ -90,47 +125,75 @@ export default function Dropdown({
       document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  });
 
   return (
     <div
       ref={dropdownRef}
-      className={styles.dropdown}
+      className={`${styles.dropdown} ${
+        variant === "form" ? styles.formDropdown : styles.navigationDropdown
+      }`}
       onBlurCapture={handleBlur}
     >
+      {name && (
+        <input type="hidden" name={name} value={selectedValue} />
+      )}
+
       <button
         type="button"
         className={styles.trigger}
         onClick={toggleDropdown}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        aria-haspopup="true"
+        aria-haspopup="listbox"
+        disabled={disabled}
+        data-invalid={required && selectedValue.length === 0}
+        tabIndex={tabIndex}
       >
-        {label}
+        <span>{triggerLabel}</span>
+        <FiChevronDown aria-hidden="true" />
       </button>
 
       <div
         id={panelId}
-        className={`${styles.panel} ${
-          isOpen ? styles.panelOpen : ""
-        }`}
+        className={`${styles.panel} ${isOpen ? styles.panelOpen : ""}`}
         aria-hidden={!isOpen}
       >
         <div className={styles.panelClip}>
           <div className={styles.panelContent}>
-            <ul className={styles.list}>
-              {items.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={styles.link}
-                    onClick={() => handleNavigate(item)}
-                    tabIndex={isOpen ? 0 : -1}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+            <ul className={styles.list} role="listbox" aria-label={label}>
+              {items.map((item) => {
+                const itemValue = item.value ?? item.href ?? item.label;
+                const isSelected = itemValue === selectedValue;
+
+                return (
+                  <li key={itemValue} role="presentation">
+                    {item.href && variant === "navigation" ? (
+                      <Link
+                        href={item.href}
+                        className={styles.option}
+                        onClick={() => handleSelect(item)}
+                        tabIndex={isOpen ? tabIndex : -1}
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        className={`${styles.option} ${
+                          isSelected ? styles.optionSelected : ""
+                        }`}
+                        onClick={() => handleSelect(item)}
+                        role="option"
+                        aria-selected={isSelected}
+                        tabIndex={isOpen ? tabIndex : -1}
+                      >
+                        {item.label}
+                      </button>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

@@ -1,13 +1,25 @@
 .header {
   position: sticky;
-  top: 0;
+  top: 0 !important;
   z-index: 1000;
 
   width: 100%;
   overflow: visible;
 
-  border-bottom: 1px solid rgb(0 0 0 / 8%);
-  background: rgb(255 255 255 / 96%);
+  border-bottom: var(--border-width) solid var(--foreground);
+
+  color: var(--foreground);
+  background-color: color-mix(
+    in srgb,
+    var(--background) 68%,
+    transparent
+  );
+  backdrop-filter: blur(0.1rem);
+
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .container {
@@ -18,99 +30,92 @@
   align-items: center;
   justify-content: space-between;
 
-  width: min(1200px, calc(100% - 48px));
-  min-height: 76px;
+  width: min(var(--container-width), calc(100% - var(--container-padding)));
+  min-height: 4.75rem;
   margin: 0 auto;
+
+  background-color: transparent;
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
+  gap: 0.625rem;
 
-  color: #111;
+  color: var(--foreground);
 
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.06em;
   text-decoration: none;
 }
 
+.logoImage {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+}
+
 .desktopNavigation {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 1.75rem;
 }
 
-.servicesItem {
+.navItem {
   position: relative;
-  height: 76px;
+  display: inline-flex;
+  align-items: center;
+  height: 4.75rem;
+
+  border: 0;
+  appearance: none;
+
+  color: var(--foreground);
+  background: transparent;
+
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+
+  cursor: pointer;
 }
 
-.servicesItem::after {
+.navItem::after {
   content: "";
 
   position: absolute;
   right: 0;
-  bottom: 15px;
+  bottom: 0.9375rem;
   left: 0;
 
-  height: 2px;
-  border-radius: 999px;
+  height: var(--border-width);
+  border-radius: var(--border-radius-round);
 
-  background: #111;
+  background-color: var(--foreground);
 
   transform: scaleX(0);
-  transform-origin: right center;
+  transform-origin: 100%;
 
-  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
 
   pointer-events: none;
 }
 
-.servicesItemActive::after {
+.navItemActive::after {
   transform: scaleX(1);
-  transform-origin: left center;
-}
-
-.contactButton,
-.mobileContactButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-height: 46px;
-  padding: 0 22px;
-
-  border: 1px solid #111;
-  border-radius: 999px;
-
-  color: #fff;
-  background: #111;
-
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-
-  transition:
-    color 180ms ease,
-    background-color 180ms ease,
-    transform 180ms ease;
-}
-
-.contactButton:hover {
-  color: #111;
-  background: transparent;
-  transform: translateY(-1px);
+  transform-origin: 0;
 }
 
 .logo:focus-visible,
-.contactButton:focus-visible,
-.mobileContactButton:focus-visible,
+.navItem:focus-visible,
 .mobileServiceLink:focus-visible,
 .menuButton:focus-visible {
-  outline: 2px solid #111;
-  outline-offset: 5px;
+  outline: var(--border-width) solid var(--foreground);
+  outline-offset: 0.3125rem;
 }
 
 .menuButton {
@@ -119,56 +124,30 @@
 
   display: none;
 
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
 
   border: 0;
-  background: transparent;
+  appearance: none;
+
+  color: var(--foreground);
+  background-color: var(--background);
 
   cursor: pointer;
 }
 
-.menuButton span {
-  position: absolute;
-  left: 10px;
-
-  width: 24px;
-  height: 2px;
-
-  border-radius: 999px;
-  background: #111;
-
-  transition:
-    top 220ms ease,
-    transform 220ms ease,
-    opacity 160ms ease;
+.menuButton svg {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
-.menuButton span:nth-child(1) {
-  top: 14px;
-}
+.mobileActions {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
 
-.menuButton span:nth-child(2) {
-  top: 21px;
-}
-
-.menuButton span:nth-child(3) {
-  top: 28px;
-}
-
-.menuButtonOpen span:nth-child(1) {
-  top: 21px;
-  transform: rotate(45deg);
-}
-
-.menuButtonOpen span:nth-child(2) {
-  opacity: 0;
-}
-
-.menuButtonOpen span:nth-child(3) {
-  top: 21px;
-  transform: rotate(-45deg);
+  background-color: transparent;
 }
 
 .mobileMenu {
@@ -179,24 +158,23 @@
   display: none;
 
   width: 100%;
-  height: 100vh;
   height: 100dvh;
-
-  padding: 100px 24px 32px;
+  padding: 6.25rem 1.5rem 2rem;
   overflow-y: auto;
 
-  background: #fff;
+  color: var(--foreground);
+  background-color: var(--background);
 
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
 
-  transform: translateY(-24px);
+  transform: translateY(-1.5rem);
 
   transition:
-    opacity 280ms ease,
-    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
-    visibility 0s linear 420ms;
+    opacity 0.28s,
+    transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.42s;
 }
 
 .mobileMenuOpen {
@@ -207,80 +185,154 @@
   transform: translateY(0);
 
   transition:
-    opacity 280ms ease,
-    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
-    visibility 0s linear 0s;
+    opacity 0.28s,
+    transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility linear;
 }
 
 .mobileNavigation {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 2rem;
 
-  width: min(100%, 560px);
-  min-height: calc(100dvh - 132px);
+  width: min(100%, 35rem);
+  min-height: calc(100dvh - 8.25rem);
   margin: 0 auto;
+
+  color: var(--foreground);
+  background-color: var(--background);
 }
 
 .mobileServicesList {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
 
   margin: 0;
   padding: 0;
 
+  border-top: var(--border-width) solid var(--foreground);
   list-style: none;
 }
 
+.mobileServicesList li {
+  border-bottom: var(--border-width) solid var(--foreground);
+}
+
 .mobileServiceLink {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+
   width: 100%;
-  padding: 11px 0;
+  min-height: 6.5rem;
+  padding: 1.5rem;
 
-  color: #111;
+  border: 0;
+  appearance: none;
 
-  font-size: clamp(24px, 7vw, 32px);
+  color: var(--foreground);
+  background-color: var(--background);
+
+  font: inherit;
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.05;
   text-decoration: none;
 
-  transition: opacity 180ms ease;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    padding var(--transition-fast);
 }
 
-.mobileServiceLink:hover {
-  opacity: 0.55;
+.mobileServiceLink > svg {
+  display: inline-flex;
+  flex-shrink: 0;
+
+  width: 1.25rem;
+  height: 1.25rem;
+
+  transition: transform var(--transition-fast);
 }
 
-.mobileContactButton {
-  width: 100%;
-  min-height: 52px;
-  margin-top: auto;
-
-  font-size: 16px;
+.mobileServiceLink:hover,
+.mobileServiceLink:focus-visible,
+.mobileServiceLinkActive {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  color: var(--background);
+  background-color: var(--foreground);
 }
 
-@media (max-width: 800px) {
+.mobileServiceLink:hover > svg,
+.mobileServiceLink:focus-visible > svg,
+.mobileServiceLinkActive > svg {
+  transform: translate(0.1875rem, -0.1875rem);
+}
+
+.mobileServiceLink:focus-visible {
+  outline-offset: -0.125rem;
+}
+
+@media (max-width: 61.25rem) {
+  .desktopNavigation {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 50rem) {
+  .header {
+    background-color: transparent;
+  }
+
   .container {
-    width: calc(100% - 32px);
-    min-height: 68px;
+    width: 100%;
+    min-height: 4.25rem;
+    padding: 0 1rem;
+    background-color: transparent;
   }
 
   .desktopNavigation {
     display: none;
   }
 
-  .menuButton {
-    display: block;
+  .mobileActions {
+    display: flex;
   }
 
+  .menuButton,
   .mobileMenu {
     display: block;
   }
 }
 
-@media (min-width: 801px) {
+@media (min-width: 50.0625rem) {
   .mobileMenu {
     display: none;
+  }
+}
+
+@media (max-width: 50rem) and (hover: none) {
+  .mobileServiceLink:hover {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    color: var(--foreground);
+    background-color: var(--background);
+  }
+
+  .mobileServiceLink:hover > svg {
+    transform: none;
+  }
+
+  .mobileServiceLink:active {
+    color: var(--background);
+    background-color: var(--foreground);
+  }
+
+  .mobileServiceLink:active > svg {
+    transform: translate(0.1875rem, -0.1875rem);
   }
 }

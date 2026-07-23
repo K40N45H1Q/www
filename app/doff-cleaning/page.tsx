@@ -1,4 +1,3 @@
-import Header from "@/components/Header/Header";
 import ContentRows, {
   type ContentRow,
 } from "@/components/ContentRows/ContentRows";

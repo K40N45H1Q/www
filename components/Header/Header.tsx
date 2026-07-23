@@ -1,56 +1,35 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import Dropdown, {
-  type DropdownItem,
-} from "@/components/Dropdown/Dropdown";
+import { FiArrowUpRight, FiMenu, FiX } from "react-icons/fi";
+import ThemeSwitcher from "@/components/ThemeSwitcher/ThemeSwitcher";
+import { services } from "@/data/services";
+import { publicAsset } from "@/lib/sitePath";
 import styles from "./Header.module.css";
-
-const services: DropdownItem[] = [
-  {
-    label: "DOFF Cleaning",
-    href: "/doff-cleaning",
-  },
-  {
-    label: "Modular House",
-    href: "/modular-house",
-  },
-  {
-    label: "Landscape",
-    href: "/landscape",
-  },
-  {
-    label: "Fencing Building",
-    href: "/fencing-building",
-  },
-  {
-    label: "Modular Garden Office",
-    href: "/modular-garden-office",
-  },
-];
 
 export default function Header() {
   const pathname = usePathname();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
-
-  const isServicePage = services.some(
-    ({ href }) =>
-      pathname === href || pathname.startsWith(`${href}/`),
-  );
-
-  const isServicesActive = isServicePage || isServicesOpen;
 
   function closeMobileMenu() {
     setIsMenuOpen(false);
   }
 
+  function isNavItemActive(href: string) {
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }
+
   useEffect(() => {
-    setIsMenuOpen(false);
-    setIsServicesOpen(false);
+    const timeoutId = window.setTimeout(() => {
+      setIsMenuOpen(false);
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
   }, [pathname]);
 
   useEffect(() => {
@@ -88,49 +67,71 @@ export default function Header() {
           onClick={closeMobileMenu}
           aria-label="Go to homepage"
         >
-          Company
+          <Image
+            src={publicAsset("/favicon.ico")}
+            alt=""
+            width={40}
+            height={40}
+            className={styles.logoImage}
+          />
+          <span>Company</span>
         </Link>
 
         <nav
           className={styles.desktopNavigation}
           aria-label="Main navigation"
         >
-          <div
-            className={`${styles.servicesItem} ${
-              isServicesActive ? styles.servicesItemActive : ""
-            }`}
-          >
-            <Dropdown
-              label="Services"
-              items={services}
-              onOpenChange={setIsServicesOpen}
-            />
-          </div>
+          {services.map((service) => (
+            <Link
+              key={service.href}
+              href={service.href}
+              className={`${styles.navItem} ${
+                isNavItemActive(service.href) ? styles.navItemActive : ""
+              }`}
+              aria-current={
+                isNavItemActive(service.href) ? "page" : undefined
+              }
+            >
+              {service.title}
+            </Link>
+          ))}
 
           <Link
-            href="/#contact"
-            className={styles.contactButton}
+            href="/contact-us"
+            className={`${styles.navItem} ${
+              isNavItemActive("/contact-us") ? styles.navItemActive : ""
+            }`}
+            aria-current={
+              isNavItemActive("/contact-us") ? "page" : undefined
+            }
           >
             Contact us
           </Link>
+
+          <ThemeSwitcher />
+
         </nav>
 
-        <button
-          type="button"
-          className={`${styles.menuButton} ${
-            isMenuOpen ? styles.menuButtonOpen : ""
-          }`}
-          onClick={() => {
-            setIsMenuOpen((current) => !current);
-          }}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
-          aria-controls="mobile-navigation"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className={styles.mobileActions}>
+          <ThemeSwitcher />
+
+          <button
+            type="button"
+            className={styles.menuButton}
+            onClick={() => {
+              setIsMenuOpen((current) => !current);
+            }}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+          >
+            {isMenuOpen ? (
+              <FiX aria-hidden="true" />
+            ) : (
+              <FiMenu aria-hidden="true" />
+            )}
+          </button>
+        </div>
       </div>
 
       <div
@@ -149,24 +150,41 @@ export default function Header() {
               <li key={service.href}>
                 <Link
                   href={service.href}
-                  className={styles.mobileServiceLink}
+                  className={`${styles.mobileServiceLink} ${
+                    isNavItemActive(service.href)
+                      ? styles.mobileServiceLinkActive
+                      : ""
+                  }`}
                   onClick={closeMobileMenu}
                   tabIndex={isMenuOpen ? 0 : -1}
+                  aria-current={
+                    isNavItemActive(service.href) ? "page" : undefined
+                  }
                 >
-                  {service.label}
+                  <span>{service.title}</span>
+                  <FiArrowUpRight aria-hidden="true" />
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/contact-us"
+                className={`${styles.mobileServiceLink} ${
+                  isNavItemActive("/contact-us")
+                    ? styles.mobileServiceLinkActive
+                    : ""
+                }`}
+                onClick={closeMobileMenu}
+                tabIndex={isMenuOpen ? 0 : -1}
+                aria-current={
+                  isNavItemActive("/contact-us") ? "page" : undefined
+                }
+              >
+                <span>Contact us</span>
+                <FiArrowUpRight aria-hidden="true" />
+              </Link>
+            </li>
           </ul>
-
-          <Link
-            href="/#contact"
-            className={styles.mobileContactButton}
-            onClick={closeMobileMenu}
-            tabIndex={isMenuOpen ? 0 : -1}
-          >
-            Contact us
-          </Link>
         </nav>
       </div>
     </header>

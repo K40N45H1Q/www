@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import GridBackground from "@/components/GridBackground/GridBackground";
 import Header from "@/components/Header/Header";
+import RequestModalProvider from "@/components/RequestModal/RequestModal";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Building and Exterior Services",
   description:
-    "Professional cleaning, modular construction, landscaping and fencing services.",
+    "Professional DOFF cleaning and fencing services.",
 };
 
 export default function RootLayout({
@@ -16,8 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <RequestModalProvider>
+          <GridBackground />
+          <Header />
+          {children}
+        </RequestModalProvider>
       </body>
     </html>
   );

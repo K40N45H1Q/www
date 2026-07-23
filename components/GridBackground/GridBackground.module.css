@@ -1,0 +1,15 @@
+.gridBackground {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+
+  width: max(100vw, calc(100vh * 16 / 9));
+  height: max(100vh, calc(100vw * 9 / 16));
+
+  color: var(--grid-color);
+
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: color var(--theme-transition);
+}

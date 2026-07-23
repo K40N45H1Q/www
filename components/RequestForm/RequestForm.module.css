@@ -1,0 +1,166 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field span {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.875rem 1rem;
+
+  border: var(--border-width) solid var(--foreground);
+  border-radius: 0.5rem;
+  outline: none;
+
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 58%, transparent);
+  backdrop-filter: blur(0.7rem);
+
+  font: inherit;
+  font-size: 1rem;
+}
+
+.field textarea {
+  min-height: 9rem;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: 0.125rem solid var(--foreground);
+  outline-offset: 0.125rem;
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  min-height: 3.5rem;
+  padding: 0 1.25rem 0 1.5rem;
+
+  border: var(--border-width) solid var(--foreground);
+  border-radius: var(--border-radius-round);
+  appearance: none;
+
+  color: var(--background);
+  background: var(--foreground);
+
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.formPage .submitButton {
+  align-self: flex-start;
+  min-width: 12rem;
+}
+
+.submitButton svg {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  transition: transform var(--transition-fast);
+}
+
+.submitButton:hover {
+  color: var(--foreground);
+  background: var(--background);
+  transform: translateY(-0.0625rem);
+}
+
+.submitButton:hover svg {
+  transform: translate(0.125rem, -0.125rem);
+}
+
+.submitButton:focus-visible {
+  outline: 0.125rem solid var(--foreground);
+  outline-offset: 0.1875rem;
+}
+
+.submitButton:disabled {
+  cursor: wait;
+  opacity: 0.65;
+  transform: none;
+}
+
+.error {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border: var(--border-width) solid var(--foreground);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--background) 48%, transparent);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.successMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: var(--border-width) solid var(--foreground);
+  border-radius: 50%;
+}
+
+.successMark svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.success h2 {
+  margin: 0.75rem 0 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.success p {
+  max-width: 28rem;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 40rem) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .formPage .submitButton {
+    align-self: stretch;
+  }
+}

@@ -1,45 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FiArrowUpRight } from "react-icons/fi";
+import ExploreServicesButton from "@/components/ExploreServicesButton/ExploreServicesButton";
+import RequestButton from "@/components/RequestButton/RequestButton";
+import { services } from "@/data/services";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Property Services",
   description:
-    "Professional DOFF cleaning, modular construction, landscaping, fencing and garden office services.",
+    "Professional DOFF cleaning and fencing services for residential and commercial properties.",
 };
-
-const services = [
-  {
-    title: "DOFF Cleaning",
-    description:
-      "A specialist low-pressure cleaning system for brick, stone, timber and delicate exterior surfaces.",
-    href: "/doff-cleaning",
-  },
-  {
-    title: "Modular Houses",
-    description:
-      "Modern modular homes planned around your property, lifestyle and long-term requirements.",
-    href: "/modular-house",
-  },
-  {
-    title: "Landscaping",
-    description:
-      "Well-designed gardens and outdoor spaces created for practical, comfortable everyday living.",
-    href: "/landscape",
-  },
-  {
-    title: "Fencing",
-    description:
-      "Strong, carefully installed fencing and gates for privacy, security and a complete exterior.",
-    href: "/fencing-building",
-  },
-  {
-    title: "Modular Garden Offices",
-    description:
-      "Insulated, comfortable workspaces that create valuable room without extending your home.",
-    href: "/modular-garden-office",
-  },
-];
 
 const qualities = [
   {
@@ -71,19 +42,18 @@ export default function HomePage() {
 
             <div className={styles.heroFooter}>
               <p className={styles.heroText}>
-                Specialist cleaning, landscaping, fencing and modular
-                construction delivered with care, precision and a practical
-                understanding of your property.
+                Specialist DOFF cleaning and fencing delivered with care,
+                precision and a practical understanding of your property.
               </p>
 
               <div className={styles.heroActions}>
-                <Link href="#services" className={styles.primaryButton}>
+                <ExploreServicesButton className={styles.primaryButton}>
                   Explore services
-                </Link>
+                </ExploreServicesButton>
 
-                <Link href="#contact" className={styles.secondaryButton}>
+                <RequestButton className={styles.secondaryButton}>
                   Contact us
-                </Link>
+                </RequestButton>
               </div>
             </div>
           </div>
@@ -96,7 +66,7 @@ export default function HomePage() {
             <p className={styles.sectionLabel}>What we do</p>
 
             <h2>
-              Practical services for homes, buildings and outdoor spaces.
+              Specialist exterior services for homes and buildings.
             </h2>
           </header>
 
@@ -112,7 +82,7 @@ export default function HomePage() {
                 <p>{service.description}</p>
 
                 <span className={styles.serviceArrow} aria-hidden="true">
-                  ↗
+                  <FiArrowUpRight />
                 </span>
               </Link>
             ))}
@@ -162,12 +132,9 @@ export default function HomePage() {
                 you find the right next step.
               </p>
 
-              <a
-                href="mailto:hello@yourcompany.com"
-                className={styles.contactButton}
-              >
+              <RequestButton className={styles.contactButton}>
                 Start a conversation
-              </a>
+              </RequestButton>
             </div>
           </div>
         </div>

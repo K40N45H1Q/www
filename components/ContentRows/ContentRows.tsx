@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { publicAsset } from "@/lib/sitePath";
 import styles from "./ContentRows.module.css";
 
 export type ContentRow = {
@@ -36,7 +37,7 @@ export default function ContentRows({ items }: ContentRowsProps) {
 
           <div className={styles.image}>
             <Image
-              src={item.image}
+              src={publicAsset(item.image)}
               alt={item.imageAlt || item.title}
               fill
               sizes="(max-width: 700px) 100vw, 50vw"

@@ -1,0 +1,221 @@
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100svh - 4.75rem);
+  color: var(--foreground);
+  background: transparent;
+}
+
+.container {
+  width: min(var(--container-width), calc(100% - var(--container-padding)));
+  margin: 0 auto;
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 4.75rem);
+  padding: clamp(4.5rem, 8vw, 7rem) 0;
+  border-bottom: var(--border-width) solid var(--foreground);
+}
+
+.eyebrow,
+.sectionLabel {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  max-width: 58rem;
+  margin: 2rem 0 0;
+  font-size: clamp(4.25rem, 8vw, 7rem);
+  font-weight: 500;
+  line-height: 0.92;
+}
+
+.introFooter {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(2rem, 7vw, 6rem);
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+  padding-top: 1.75rem;
+  border-top: var(--border-width) solid var(--foreground);
+}
+
+.introFooter p {
+  max-width: 36rem;
+  margin: 0;
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.7;
+}
+
+.serviceSection {
+  padding: clamp(4.75rem, 8vw, 7.5rem) 0;
+}
+
+.sectionHeader {
+  display: grid;
+  grid-template-columns: 11.25rem minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+
+.sectionHeader h2 {
+  max-width: 47rem;
+  margin: 0;
+  font-size: clamp(2.5rem, 5vw, 4.375rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.serviceList {
+  border-top: var(--border-width) solid var(--foreground);
+}
+
+.serviceItem {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.55fr) minmax(18rem, 1fr) 3rem;
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  min-height: 7.5rem;
+  padding: 1.5rem;
+  border-bottom: var(--border-width) solid var(--foreground);
+  color: var(--foreground);
+  background: transparent;
+  text-decoration: none;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    padding var(--transition-fast);
+}
+
+.serviceItem span {
+  font-size: clamp(1.8rem, 3vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.serviceItem p {
+  max-width: 36rem;
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.serviceItem svg {
+  justify-self: end;
+  width: 1.125rem;
+  height: 1.125rem;
+  transition: transform var(--transition-fast);
+}
+
+.serviceItem:hover {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  color: var(--background);
+  background: var(--foreground);
+}
+
+.serviceItem:hover svg {
+  transform: translate(0.1875rem, -0.1875rem);
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 3.25rem;
+  margin-top: 2.5rem;
+  padding: 0 1.5rem;
+  border: var(--border-width) solid var(--foreground);
+  border-radius: var(--border-radius-round);
+  appearance: none;
+  color: var(--background);
+  background: var(--foreground);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.primaryButton svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--transition-fast);
+}
+
+.primaryButton:hover {
+  color: var(--foreground);
+  background: var(--background);
+  transform: translateY(-0.0625rem);
+}
+
+.primaryButton:hover svg {
+  transform: translate(0.125rem, -0.125rem);
+}
+
+.primaryButton:focus-visible,
+.serviceItem:focus-visible {
+  outline: var(--border-width) solid var(--foreground);
+  outline-offset: 0.3125rem;
+}
+
+@media (max-width: 50rem) {
+  .intro {
+    min-height: auto;
+  }
+
+  .introFooter {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sectionHeader,
+  .serviceItem {
+    grid-template-columns: 1fr;
+  }
+
+  .serviceItem {
+    min-height: 0;
+    padding: 1.75rem 0;
+  }
+
+  .serviceItem:hover {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .serviceItem svg {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 40rem) {
+  .container {
+    width: calc(100% - 2rem);
+  }
+
+  .intro {
+    padding-top: 4.5rem;
+  }
+
+  .intro h1 {
+    font-size: clamp(3.25rem, 16vw, 5.25rem);
+  }
+
+  .primaryButton {
+    width: 100%;
+  }
+}

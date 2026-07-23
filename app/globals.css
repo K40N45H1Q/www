@@ -1,36 +1,99 @@
 @import url("https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap");
 
 :root {
+  --background: #fff;
+  --foreground: #000;
+  --container-width: 75rem;
+  --container-padding: 3rem;
+  --border-width: 0.03rem;
+  --border-radius-round: 999rem;
+  --transition-fast: 0.18s ease;
+  --transition-base: 0.2s ease;
+  --theme-transition: 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  --grid-color: rgb(0 0 0 / 20%);
+
   font-family: "Google Sans", Arial, Helvetica, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
 
-* {
+html[data-theme="dark"] {
+  --background: #000;
+  --foreground: #fff;
+  --grid-color: rgb(255 255 255 / 30%);
+}
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--foreground) var(--background);
+}
+
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition:
+    background-color var(--theme-transition),
+    border-color var(--theme-transition),
+    color var(--theme-transition),
+    fill var(--theme-transition),
+    outline-color var(--theme-transition),
+    scrollbar-color var(--theme-transition),
+    stroke var(--theme-transition) !important;
+}
+
+::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 0.1875rem solid var(--background);
+  border-radius: var(--border-radius-round);
+  background: var(--foreground);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--background);
+}
+
 html {
   scroll-behavior: smooth;
+  background: var(--background);
 }
 
 body {
+  isolation: isolate;
   min-height: 100vh;
   font-family: inherit;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
-  color: #111;
-  background: #fff;
+  color: var(--foreground);
+  background: var(--background);
 }
 
 button,
 input,
 textarea,
 select {
+  color: inherit;
   font: inherit;
+}
+
+a {
+  color: inherit;
 }
 
 img {
