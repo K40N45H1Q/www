@@ -8,6 +8,7 @@ type ExploreServicesButtonProps = {
 };
 
 const SCROLL_DURATION_MS = 1000;
+const MOBILE_SERVICES_TOP_GAP = 24;
 let activeAnimationFrame: number | null = null;
 
 function easeInOutCubic(progress: number) {
@@ -36,8 +37,16 @@ export default function ExploreServicesButton({
     const pageScroller = scroller;
     const header = document.querySelector("header");
     const headerHeight = header?.getBoundingClientRect().height ?? 0;
+    const targetStyles = window.getComputedStyle(target);
+    const targetPaddingTop = Number.parseFloat(targetStyles.paddingTop) || 0;
+    const mobileOffset = window.matchMedia("(max-width: 650px)").matches
+      ? Math.max(0, targetPaddingTop - MOBILE_SERVICES_TOP_GAP)
+      : 0;
     const rawTargetTop =
-      target.getBoundingClientRect().top + window.scrollY - headerHeight;
+      target.getBoundingClientRect().top +
+      window.scrollY -
+      headerHeight +
+      mobileOffset;
     const maxScrollTop = pageScroller.scrollHeight - window.innerHeight;
     const targetTop = Math.max(0, Math.min(rawTargetTop, maxScrollTop));
 

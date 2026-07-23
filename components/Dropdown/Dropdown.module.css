@@ -32,7 +32,7 @@
   padding: 0.875rem 1rem;
   border: var(--border-width) solid var(--foreground);
   border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--background) 58%, transparent);
+  background: var(--background);
   font-size: 1rem;
   text-align: left;
   -webkit-font-smoothing: antialiased;
@@ -110,7 +110,7 @@
   overflow: hidden;
   border: var(--border-width) solid var(--foreground);
   border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--background) 68%, transparent);
+  background: var(--background);
   box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 18%);
 }
 
