@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,68725,t=>{"use strict";var e=t.i(43476),o=t.i(41159);t.s(["default",0,function({children:t,className:u}){let{openRequestModal:s}=(0,o.useRequestModal)();return(0,e.jsx)("button",{type:"button",className:u,onClick:s,children:t})}])}]);
