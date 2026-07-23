@@ -8,8 +8,17 @@
   padding: 1.5rem;
   overflow: hidden;
 
-  background: color-mix(in srgb, var(--background) 18%, transparent);
-  backdrop-filter: blur(0.45rem);
+  background: transparent;
+}
+
+.backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgb(0 0 0 / 42%);
+  backdrop-filter: blur(0.55rem);
+  pointer-events: none;
 }
 
 .backdrop[data-state="closed"] {
@@ -20,8 +29,8 @@
 
 .backdrop[data-state="opening"] {
   visibility: visible;
+  opacity: 1;
   pointer-events: auto;
-  animation: backdropEnter 0.5s ease both;
 }
 
 .backdrop[data-state="open"] {
@@ -32,11 +41,12 @@
 
 .backdrop[data-state="closing"] {
   visibility: visible;
+  opacity: 1;
   pointer-events: none;
-  animation: backdropExit 0.38s ease both;
 }
 
 .modal {
+  position: relative;
   width: min(100%, 42rem);
   max-height: calc(100dvh - 3rem);
   overflow: hidden;
@@ -45,17 +55,26 @@
   border-radius: 0.875rem;
   outline: none;
 
+  isolation: isolate;
   color: var(--foreground);
-  background: color-mix(in srgb, var(--background) 72%, transparent);
-  backdrop-filter: blur(1.15rem) saturate(1.18);
+  background: transparent;
   box-shadow: 0 2.5rem 5rem rgb(0 0 0 / 22%);
+  z-index: 1;
+}
 
-  will-change: transform, opacity;
+.modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: color-mix(in srgb, var(--background) 92%, transparent);
+  backdrop-filter: blur(0.1rem);
+  pointer-events: none;
 }
 
 .modal[data-state="closed"] {
   opacity: 0;
-  transform: translateY(110dvh);
+  margin-top: 110dvh;
 }
 
 .modal[data-state="opening"] {
@@ -64,7 +83,7 @@
 
 .modal[data-state="open"] {
   opacity: 1;
-  transform: translate(0, 0);
+  margin-top: 0;
 }
 
 .modal[data-state="closing"] {
@@ -72,6 +91,9 @@
 }
 
 .modalHeader {
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,8 +103,9 @@
   border-bottom: var(--border-width) solid var(--foreground);
 
   color: var(--foreground);
-  background: color-mix(in srgb, var(--background) 58%, transparent);
-  backdrop-filter: blur(1rem);
+  background: transparent;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .title {
@@ -109,7 +132,6 @@
 
   color: var(--foreground);
   background: color-mix(in srgb, var(--background) 62%, transparent);
-  backdrop-filter: blur(0.75rem);
 
   cursor: pointer;
 
@@ -130,58 +152,43 @@
 }
 
 .content {
+  position: relative;
+  z-index: 1;
+
   max-height: calc(100dvh - 9rem);
   padding: 1.5rem;
   overflow-y: auto;
-  background: color-mix(in srgb, var(--background) 42%, transparent);
-}
-
-@keyframes backdropEnter {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes backdropExit {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
+  background: transparent;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 @keyframes modalEnter {
   0% {
     opacity: 0;
-    transform: translateY(105dvh) scale(0.96);
+    margin-top: 105dvh;
   }
 
   68% {
     opacity: 1;
-    transform: translateY(-0.875rem) scale(1.012);
+    margin-top: -0.875rem;
   }
 
   100% {
     opacity: 1;
-    transform: translate(0, 0);
+    margin-top: 0;
   }
 }
 
 @keyframes modalExit {
   from {
     opacity: 1;
-    transform: translate(0, 0);
+    margin-top: 0;
   }
 
   to {
     opacity: 0;
-    transform: translateY(105dvh) scale(0.98);
+    margin-top: 105dvh;
   }
 }
 
@@ -197,7 +204,6 @@
     max-height: none;
     border: 0;
     border-radius: 0;
-    background: color-mix(in srgb, var(--background) 76%, transparent);
   }
 
   .modalHeader {

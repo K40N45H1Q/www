@@ -141,18 +141,12 @@ export default function RequestModalProvider({
               return;
             }
 
-            if (
-              modalState === "opening" &&
-              event.animationName.includes("modalEnter")
-            ) {
+            if (modalState === "opening") {
               setModalState("open");
               return;
             }
 
-            if (
-              modalState === "closing" &&
-              event.animationName.includes("modalExit")
-            ) {
+            if (modalState === "closing") {
               setModalState("closed");
 
               if (previousFocusRef.current?.isConnected) {

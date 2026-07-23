@@ -33,9 +33,10 @@
   border: var(--border-width) solid var(--foreground);
   border-radius: 0.5rem;
   background: color-mix(in srgb, var(--background) 58%, transparent);
-  backdrop-filter: blur(0.7rem);
   font-size: 1rem;
   text-align: left;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .trigger svg {
@@ -110,7 +111,6 @@
   border: var(--border-width) solid var(--foreground);
   border-radius: 0.5rem;
   background: color-mix(in srgb, var(--background) 68%, transparent);
-  backdrop-filter: blur(1rem) saturate(1.12);
   box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 18%);
 }
 
