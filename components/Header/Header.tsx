@@ -150,11 +150,7 @@ export default function Header() {
               <li key={service.href}>
                 <Link
                   href={service.href}
-                  className={`${styles.mobileServiceLink} ${
-                    isNavItemActive(service.href)
-                      ? styles.mobileServiceLinkActive
-                      : ""
-                  }`}
+                  className={styles.mobileServiceLink}
                   onClick={closeMobileMenu}
                   tabIndex={isMenuOpen ? 0 : -1}
                   aria-current={
@@ -169,11 +165,7 @@ export default function Header() {
             <li>
               <Link
                 href="/contact-us"
-                className={`${styles.mobileServiceLink} ${
-                  isNavItemActive("/contact-us")
-                    ? styles.mobileServiceLinkActive
-                    : ""
-                }`}
+                className={styles.mobileServiceLink}
                 onClick={closeMobileMenu}
                 tabIndex={isMenuOpen ? 0 : -1}
                 aria-current={

@@ -32,6 +32,7 @@ html[data-theme="dark"] {
 }
 
 * {
+  user-select: none !important;
   scrollbar-width: thin;
   scrollbar-color: var(--foreground) var(--background);
 }

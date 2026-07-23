@@ -259,8 +259,7 @@
 }
 
 .mobileServiceLink:hover,
-.mobileServiceLink:focus-visible,
-.mobileServiceLinkActive {
+.mobileServiceLink:focus-visible {
   padding-right: 2rem;
   padding-left: 2rem;
   color: var(--background);
@@ -268,8 +267,7 @@
 }
 
 .mobileServiceLink:hover > svg,
-.mobileServiceLink:focus-visible > svg,
-.mobileServiceLinkActive > svg {
+.mobileServiceLink:focus-visible > svg {
   transform: translate(0.1875rem, -0.1875rem);
 }
 

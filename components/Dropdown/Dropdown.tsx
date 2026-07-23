@@ -180,9 +180,7 @@ export default function Dropdown({
                     ) : (
                       <button
                         type="button"
-                        className={`${styles.option} ${
-                          isSelected ? styles.optionSelected : ""
-                        }`}
+                        className={styles.option}
                         onClick={() => handleSelect(item)}
                         role="option"
                         aria-selected={isSelected}
